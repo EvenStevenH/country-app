@@ -1,4 +1,4 @@
-addEventListener("click", toggleDarkMode)
+document.getElementById("toggleDarkModeButton").addEventListener("click", toggleDarkMode)
 
 function toggleDarkMode() {
    let element = document.body;
