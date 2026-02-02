@@ -23,12 +23,23 @@
     </header>
 
     <main>
-        <div class="container">
-            <label for="countrySearch">Search for a Country</label>
-            <input id="countrySearch" type="search" placeholder="Search for a country">
+        <div class="container" id="input-section">
+            <label for="search-input">Search for a Country</label>
+            <input id="search-input" type="search" placeholder="Search for a country">
             <button>Search</button>
+
+            <select id="filter-input">
+                <option value="">Filter by Region</option>
+                <option>Africa</option>
+                <option>America</option>
+                <option>Asia</option>
+                <option>Europe</option>
+                <option>Oceania</option>
+            </select>
         </div>
-        <div class="container" id="country-list"></div>
+
+        <div class="container" id="country-list">
+        </div>
     </main>
 
     <script src="script.js" defer></script>
