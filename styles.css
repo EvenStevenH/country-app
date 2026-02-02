@@ -1,3 +1,8 @@
+/* Notes */
+/* Mobile: 375px */
+/* Desktop: 1440px */
+/* Detail Page: 16px  */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -6,9 +11,15 @@
 body {
 	background-color: white;
 	color: black;
+	font-size: 14px;
+	font-family: "Nunito Sans", sans-serif;
 }
 
 .dark-mode {
-  background-color: black;
-  color: white;
+	background-color: black;
+	color: white;
+}
+
+h1 {
+	font-weight: 800;
 }
