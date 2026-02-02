@@ -8,18 +8,30 @@
 	padding: 0;
 }
 
+:root {
+	--bg: white;
+	--text: #111;
+}
+
+:root.dark-mode {
+	--bg: #111;
+	--text: #fff;
+}
+
 body {
-	background-color: white;
-	color: black;
+	background: var(--bg);
+	color: var(--text);
+	transition:
+		background 0.4s ease,
+		color 0.4s ease;
 	font-size: 14px;
 	font-family: "Nunito Sans", sans-serif;
 }
 
-.dark-mode {
-	background-color: black;
-	color: white;
-}
-
 h1 {
 	font-weight: 800;
+}
+
+button {
+	cursor: pointer;
 }

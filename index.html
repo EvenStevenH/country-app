@@ -13,13 +13,22 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
+
+    <!-- prevent FOUC (flash of unstyled content -->
+    <script>
+        (function () {
+            const theme = localStorage.getItem("theme");
+            if (theme === "dark") {
+                document.documentElement.classList.add("dark-mode");
+            }
+        })();
+    </script>
 </head>
 
 <body>
-
     <header>
-        <h1>Where in the world?</h1>
-        <button id="toggleDarkModeButton">Dark Mode</button>
+        <h1 class="title">Where in the world?</h1>
+        <button id="themeBtn" type="button" role="switch" aria-checked="false">Dark Mode</button>
     </header>
 
     <main>
