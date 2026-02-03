@@ -1,13 +1,16 @@
-// get elements and set up list
+// get elements
 const themeBtn = document.getElementById("themeBtn");
 const root = document.documentElement;
 const isDark = root.classList.contains("dark-mode");
 const searchInput = document.getElementById("search-input");
 const filterInput = document.getElementById("filter-input");
 const countryList = document.getElementById("country-list");
-const countryInfo = document.getElementById("country-info");
+const countryDetail = document.getElementById("country-detail");
 
+// set up list and reset inputs
 let allCountries = [];
+searchInput.value = "";
+filterInput.value = "";
 
 // light/dark mode
 themeBtn.setAttribute("aria-checked", isDark);
@@ -79,9 +82,9 @@ function displayCountries(countryData) {
 
 // country info
 function displayCountryInfo(country) {
-	countryInfo.innerHTML = "";
+	countryDetail.innerHTML = "";
 
-	countryInfo.innerHTML = `
+	countryDetail.innerHTML = `
         <img class="country-flag" src="${country.flags.png}">
 
         <div class="country-info">

@@ -120,9 +120,11 @@ main {
 
 .country-info ul {
 	list-style: none;
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	gap: 0.8em;
+	columns: 2;
+}
+
+.country-info li {
+	padding-bottom: 0.8em;
 }
 
 .border-countries {
@@ -154,13 +156,17 @@ main {
 	object-fit: cover;
 }
 
-#country-info {
+#country-detail {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 0.8em;
+	gap: 6em;
 }
 
-#country-info img {
+#country-detail img {
 	width: 100%;
 	border-radius: 10px;
+}
+
+#country-detail {
+	margin-bottom: 10em;
 }
