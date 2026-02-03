@@ -40,7 +40,6 @@ function updateFullResults() {
 	// 1) Start with all countries, 2) use filter, then 3) apply search term
 	const filteredResults = filterResults(allCountries, regionInput);
 	const fullResults = searchResults(filteredResults, searchTerm);
-
 	displayCountries(fullResults);
 }
 
@@ -61,16 +60,6 @@ function displayCountries(countryData) {
 		const li = document.createElement("li");
 		li.classList.add("country-item");
 
-		// li.innerHTML = `
-		// <a href="countryinfo.html">
-		// 	<img class="country-flag" src="${country.flags.png}">
-		// 	<div class="country-info">
-		// 		<h2>${country.name.common}</h2>
-		// 		<p><strong>Population</strong>: ${country.population}<p>
-		// 		<p><strong>Region</strong>: ${country.region}<p>
-		// 		<p><strong>Capital</strong>: ${country.capital?.[0] ?? "N/A"}<p>
-		// 	</div>
-		// </a>`;
 		li.innerHTML = `
 			<img class="country-flag" src="${country.flags.png}">
 			<div class="country-info">
@@ -88,7 +77,7 @@ function displayCountries(countryData) {
 	});
 }
 
-// country info page
+// country info
 function displayCountryInfo(country) {
 	countryInfo.innerHTML = "";
 
