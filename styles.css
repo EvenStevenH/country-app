@@ -35,3 +35,7 @@ h1 {
 button {
 	cursor: pointer;
 }
+
+.country-flag {
+	border-radius: 10px;
+}
