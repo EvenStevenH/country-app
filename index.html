@@ -8,13 +8,14 @@
     <link rel="icon" href="#">
     <title>REST Countries API</title>
 
+    <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
         rel="stylesheet">
 
-    <!-- prevent FOUC (flash of unstyled content -->
+    <!-- prevent FOUC (flash of unstyled content) -->
     <script>
         (function () {
             const theme = localStorage.getItem("theme");
@@ -27,15 +28,17 @@
 
 <body>
     <header>
-        <h1 class="title">Where in the world?</h1>
-        <button id="themeBtn" type="button" role="switch" aria-checked="false">Dark Mode</button>
+        <nav>
+            <h1 class="title">Where in the world?</h1>
+            <button id="themeBtn" type="button" role="switch" aria-checked="false">Dark Mode</button>
+        </nav>
     </header>
 
     <main>
         <div class="container" id="input-section">
-            <label for="search-input">Search for a Country</label>
-            <input id="search-input" type="search" placeholder="Search for a country">
-            <button>Search</button>
+            <div id="search-section">
+                <input id="search-input" type="search" placeholder="Search for a country...">
+            </div>
 
             <select id="filter-input">
                 <option value="">Filter by Region</option>
