@@ -5,6 +5,8 @@ const isDark = root.classList.contains("dark-mode");
 const searchInput = document.getElementById("search-input");
 const filterInput = document.getElementById("filter-input");
 const countryList = document.getElementById("country-list");
+const inputSection = document.getElementById("input-section");
+const countryContainer = document.getElementById("country-container");
 const countryDetail = document.getElementById("country-detail");
 
 // set up list and reset inputs
@@ -64,6 +66,7 @@ function displayCountries(countryData) {
 		li.classList.add("country-item");
 
 		li.innerHTML = `
+
 			<img class="country-flag" src="${country.flags.png}">
 			<div class="country-info">
 				<h2>${country.name.common}</h2>
@@ -73,6 +76,10 @@ function displayCountries(countryData) {
 			</div>`;
 
 		li.addEventListener("click", () => {
+			inputSection.style.display = "none";
+			countryList.style.display = "none";
+			countryContainer.style.display = "block";
+
 			displayCountryInfo(country);
 		});
 
@@ -83,7 +90,6 @@ function displayCountries(countryData) {
 // country info
 function displayCountryInfo(country) {
 	countryDetail.innerHTML = "";
-
 	countryDetail.innerHTML = `
         <img class="country-flag" src="${country.flags.png}">
 
@@ -91,22 +97,26 @@ function displayCountryInfo(country) {
             <h2>${country.name.common}</h2>
 			
 			<ul>
-				<li><strong>Native Name</strong>: ${Object.values(country.name.nativeName ?? {})[0]?.common ?? "N/A"}</li>
-				<li><strong>Population</strong>: ${country.population}</li>
-				<li><strong>Region</strong>: ${country.region}</li>
-				<li><strong>Sub Region</strong>: ${country.subregion}</li>
-				<li><strong>Capital</strong>: ${country.capital?.[0] ?? "N/A"}</li>
-				<li><strong>Top Level Domain</strong>: ${country.tld?.[0] ?? "N/A"}</li>
-				<li><strong>Currencies</strong>: ${Object.values(country.currencies ?? {})
-					.map((c) => c.name)
-					.join(", ")}</li>
-				<li><strong>Languages</strong>: ${Object.values(country.languages ?? {}).join(", ")}</li>
+				<li><strong>Native Name</strong>: ${Object.values(country.name.nativeName ?? {})[0]?.common || "N/A"}</li>
+				<li><strong>Population</strong>: ${country.population || "N/A"}</li>
+				<li><strong>Region</strong>: ${country.region || "N/A"}</li>
+				<li><strong>Sub Region</strong>: ${country.subregion || "N/A"}</li>
+				<li><strong>Capital</strong>: ${country.capital?.[0] || "N/A"}</li>
+				<li><strong>Top Level Domain</strong>: ${country.tld?.[0] || "N/A"}</li>
+				<li><strong>Currencies</strong>: ${Object.values(country.currencies).map(currency => currency.name).join(", ") || "N/A"}</li>
+				<li><strong>Languages</strong>: ${Object.values(country.languages).map(language => language.name).join(", ") || "N/A"}</li>
 			</ul>
 
         	<div class="border-countries">
-				<strong>Border Countries</strong>: ${country.borders?.join(", ") ?? "None"}
+				<strong>Border Countries</strong>: ${country.borders.join(", ") || "N/A"}
 			</div>
         </div>`;
 }
+
+backBtn.addEventListener("click", () => {
+	inputSection.style.display = "flex";
+	countryList.style.display = "grid";
+	countryContainer.style.display = "none";
+});
 
 fetchCountries();
