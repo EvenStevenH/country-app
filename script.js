@@ -16,12 +16,12 @@ filterInput.value = "";
 
 // light/dark mode
 themeBtn.setAttribute("aria-checked", isDark);
-themeBtn.textContent = isDark ? "Light Mode" : "Dark Mode";
+themeBtn.innerHTML = isDark ? `<span class="material-symbols-outlined">wb_sunny</span> Light Mode` : `<span class="material-symbols-outlined">bedtime</span> Dark Mode`;
 themeBtn.addEventListener("click", () => {
 	const nowDark = root.classList.toggle("dark-mode");
 
 	themeBtn.setAttribute("aria-checked", nowDark);
-	themeBtn.textContent = nowDark ? "Light Mode" : "Dark Mode";
+	themeBtn.innerHTML = nowDark ? `<span class="material-symbols-outlined">wb_sunny</span> Light Mode` : `<span class="material-symbols-outlined">bedtime</span> Dark Mode`;
 	localStorage.setItem("theme", nowDark ? "dark" : "light");
 });
 
@@ -103,7 +103,11 @@ function displayCountryInfo(country) {
 				<li><strong>Sub Region</strong>: ${country.subregion || "N/A"}</li>
 				<li><strong>Capital</strong>: ${country.capital?.[0] || "N/A"}</li>
 				<li><strong>Top Level Domain</strong>: ${country.tld?.[0] || "N/A"}</li>
-				<li><strong>Currencies</strong>: ${Object.values(country.currencies).map(currency => currency.name).join(", ") || "N/A"}</li>
+				<li><strong>Currencies</strong>: ${
+					Object.values(country.currencies)
+						.map((currency) => currency.name)
+						.join(", ") || "N/A"
+				}</li>
 				<li><strong>Languages</strong>: ${Object.values(country.languages).join(", ") || "N/A"}</li>
 			</ul>
 

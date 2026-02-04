@@ -103,6 +103,9 @@ select {
 	color: var(--text);
 	border: none;
 	letter-spacing: 1px;
+	display: flex;
+	gap: 0.4em;
+	align-items: center;
 }
 
 #country-list {
@@ -180,6 +183,9 @@ select {
 	letter-spacing: 1px;
 	box-shadow: rgba(0, 0, 0, 0.2) 2px 4px 6px;
 	border-radius: 10px;
+	display: flex;
+	gap: 0.4em;
+	align-items: center;
 }
 
 @media (max-width: 1000px) {
