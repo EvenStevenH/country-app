@@ -93,6 +93,18 @@ select {
 	border-right: 16px solid transparent;
 	box-shadow: rgba(0, 0, 0, 0.2) 2px 4px 6px;
 	letter-spacing: 1px;
+	transition: all 0.2s ease;
+}
+
+select:focus,
+input:focus,
+button:hover {
+	outline: orange solid 4px;
+	outline-offset: 4px;
+}
+
+#country-list li:hover {
+	transform: translateY(-4px);
 }
 
 #themeBtn {
@@ -106,6 +118,8 @@ select {
 	display: flex;
 	gap: 0.4em;
 	align-items: center;
+	transition: all 0.2s ease;
+	border-radius: 10px;
 }
 
 #country-list {
@@ -134,10 +148,6 @@ select {
 	height: 200px;
 	display: block;
 	object-fit: cover;
-}
-
-#country-list li:hover {
-	transform: translateY(-4px);
 }
 
 .country-info {
@@ -186,6 +196,7 @@ select {
 	display: flex;
 	gap: 0.4em;
 	align-items: center;
+	transition: all 0.2s ease;
 }
 
 @media (max-width: 1000px) {
@@ -219,5 +230,9 @@ select {
 
 	.country-info ul {
 		columns: auto;
+	}
+
+	#backBtn {
+		font-size: 0.8em;
 	}
 }
