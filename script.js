@@ -70,7 +70,7 @@ function displayCountries(countryData) {
 			<img class="country-flag" src="${country.flags.png}">
 			<div class="country-info">
 				<h2>${country.name.common}</h2>
-				<p><strong>Population</strong>: ${country.population}</p>
+				<p><strong>Population</strong>: ${country.population.toLocaleString()}</p>
 				<p><strong>Region</strong>: ${country.region}</p>
 				<p><strong>Capital</strong>: ${country.capital?.[0] ?? "N/A"}</p>
 			</div>`;
@@ -98,7 +98,7 @@ function displayCountryInfo(country) {
 			
 			<ul>
 				<li><strong>Native Name</strong>: ${Object.values(country.name.nativeName ?? {})[0]?.common || "N/A"}</li>
-				<li><strong>Population</strong>: ${country.population || "N/A"}</li>
+				<li><strong>Population</strong>: ${country.population.toLocaleString() || "N/A"}</li>
 				<li><strong>Region</strong>: ${country.region || "N/A"}</li>
 				<li><strong>Sub Region</strong>: ${country.subregion || "N/A"}</li>
 				<li><strong>Capital</strong>: ${country.capital?.[0] || "N/A"}</li>
