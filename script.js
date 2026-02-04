@@ -67,7 +67,7 @@ function displayCountries(countryData) {
 
 		li.innerHTML = `
 
-			<img class="country-flag" src="${country.flags.png}">
+			<img class="country-flag" src="${country.flags.png}" alt="${country.flags.alt}">
 			<div class="country-info">
 				<h2>${country.name.common}</h2>
 				<p><strong>Population</strong>: ${country.population.toLocaleString()}</p>
@@ -91,7 +91,7 @@ function displayCountries(countryData) {
 function displayCountryInfo(country) {
 	countryDetail.innerHTML = "";
 	countryDetail.innerHTML = `
-        <img class="country-flag" src="${country.flags.png}">
+        <img class="country-flag" src="${country.flags.png}" alt="${country.flags.alt}">
 
         <div class="country-info">
             <h2>${country.name.common}</h2>
@@ -104,7 +104,7 @@ function displayCountryInfo(country) {
 				<li><strong>Capital</strong>: ${country.capital?.[0] || "N/A"}</li>
 				<li><strong>Top Level Domain</strong>: ${country.tld?.[0] || "N/A"}</li>
 				<li><strong>Currencies</strong>: ${Object.values(country.currencies).map(currency => currency.name).join(", ") || "N/A"}</li>
-				<li><strong>Languages</strong>: ${Object.values(country.languages).map(language => language.name).join(", ") || "N/A"}</li>
+				<li><strong>Languages</strong>: ${Object.values(country.languages).join(", ") || "N/A"}</li>
 			</ul>
 
         	<div class="border-countries">
