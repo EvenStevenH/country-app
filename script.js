@@ -15,15 +15,25 @@ searchInput.value = "";
 filterInput.value = "";
 
 // light/dark mode
-themeBtn.setAttribute("aria-checked", isDark);
-themeBtn.innerHTML = isDark ? `<span class="material-symbols-outlined">wb_sunny</span> Light Mode` : `<span class="material-symbols-outlined">bedtime</span> Dark Mode`;
+function updateThemeButton(isDark) {
+	themeBtn.textContent = "";
+
+	const icon = document.createElement("span");
+	icon.className = "material-symbols-outlined";
+	icon.innerText = isDark ? "wb_sunny" : "bedtime";
+
+	themeBtn.append(icon, isDark ? " Light Mode" : " Dark Mode");
+	themeBtn.setAttribute("aria-checked", isDark);
+}
+
 themeBtn.addEventListener("click", () => {
 	const nowDark = root.classList.toggle("dark-mode");
-
-	themeBtn.setAttribute("aria-checked", nowDark);
-	themeBtn.innerHTML = nowDark ? `<span class="material-symbols-outlined">wb_sunny</span> Light Mode` : `<span class="material-symbols-outlined">bedtime</span> Dark Mode`;
+	updateThemeButton(nowDark);
 	localStorage.setItem("theme", nowDark ? "dark" : "light");
 });
+
+themeBtn.setAttribute("aria-checked", isDark);
+updateThemeButton(isDark);
 
 // update list if any input is given
 searchInput.addEventListener("input", updateFullResults);
@@ -50,11 +60,26 @@ function updateFullResults() {
 
 // API fetch
 async function fetchCountries() {
-	const response = await fetch("https://restcountries.com/v3.1/all?fields=name,population,region,capital,flags,subregion,languages,tld,currencies,borders");
-	const data = await response.json();
+	try {
+		const response = await fetch("https://restcountries.com/v3.1/all?fields=name,population,region,capital,flags,subregion,languages,tld,currencies,borders");
 
-	allCountries = data;
-	displayCountries(data);
+		if (!response.ok) {
+			throw new Error(`HTTP error: ${response.status}`);
+		}
+
+		const data = await response.json();
+		allCountries = data;
+		displayCountries(data);
+	} catch (error) {
+		console.error("Failed to fetch countries:", error);
+
+		countryList.textContent = "";
+		const errorMsg = document.createElement("p");
+		errorMsg.className = "error-message";
+		errorMsg.innerText = "Unable to load country data.";
+
+		countryList.appendChild(errorMsg);
+	}
 }
 
 // home page
