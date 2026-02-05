@@ -14,7 +14,7 @@ let allCountries = [];
 searchInput.value = "";
 filterInput.value = "";
 
-// light/dark mode
+// light/dark and back buttons
 function updateThemeButton(isDark) {
 	themeBtn.textContent = "";
 
@@ -25,6 +25,12 @@ function updateThemeButton(isDark) {
 	themeBtn.append(icon, isDark ? " Light Mode" : " Dark Mode");
 	themeBtn.setAttribute("aria-checked", isDark);
 }
+
+backBtn.addEventListener("click", () => {
+	inputSection.style.display = "flex";
+	countryList.style.display = "grid";
+	countryContainer.style.display = "none";
+});
 
 themeBtn.addEventListener("click", () => {
 	const nowDark = root.classList.toggle("dark-mode");
@@ -82,29 +88,47 @@ async function fetchCountries() {
 	}
 }
 
+// DOM utility helpers
+function createTextElement(tag, text, className) {
+	const element = document.createElement(tag);
+	element.innerText = text;
+	if (className) element.className = className;
+	return element;
+}
+
+function createLabel(labelText, valueText) {
+	const li = document.createElement("li");
+	const strong = document.createElement("strong");
+	strong.innerText = labelText;
+
+	li.append(strong, `: ${valueText}`);
+	return li;
+}
+
 // home page
 function displayCountries(countryData) {
-	countryList.innerHTML = "";
+	countryList.textContent = "";
 
 	countryData.forEach((country) => {
 		const li = document.createElement("li");
-		li.classList.add("country-item");
+		li.className = "country-item";
 
-		li.innerHTML = `
+		const img = document.createElement("img");
+		img.className = "country-flag";
+		img.src = country.flags.png;
+		img.alt = country.flags.alt || `${country.name.common} flag`;
 
-			<img class="country-flag" src="${country.flags.png}" alt="${country.flags.alt}">
-			<div class="country-info">
-				<h2>${country.name.common}</h2>
-				<p><strong>Population</strong>: ${country.population.toLocaleString()}</p>
-				<p><strong>Region</strong>: ${country.region}</p>
-				<p><strong>Capital</strong>: ${country.capital?.[0] ?? "N/A"}</p>
-			</div>`;
+		const info = document.createElement("div");
+		info.className = "country-info";
+
+		info.append(createTextElement("h2", country.name.common), createTextElement("p", `Population: ${country.population.toLocaleString()}`), createTextElement("p", `Region: ${country.region}`), createTextElement("p", `Capital: ${country.capital?.[0] ?? "N/A"}`));
+
+		li.append(img, info);
 
 		li.addEventListener("click", () => {
 			inputSection.style.display = "none";
 			countryList.style.display = "none";
 			countryContainer.style.display = "block";
-
 			displayCountryInfo(country);
 		});
 
@@ -114,38 +138,60 @@ function displayCountries(countryData) {
 
 // country info
 function displayCountryInfo(country) {
-	countryDetail.innerHTML = "";
-	countryDetail.innerHTML = `
-        <img class="country-flag" src="${country.flags.png}" alt="${country.flags.alt}">
+	countryDetail.textContent = "";
 
-        <div class="country-info">
-            <h2>${country.name.common}</h2>
-			
-			<ul>
-				<li><strong>Native Name</strong>: ${Object.values(country.name.nativeName ?? {})[0]?.common || "N/A"}</li>
-				<li><strong>Population</strong>: ${country.population.toLocaleString() || "N/A"}</li>
-				<li><strong>Region</strong>: ${country.region || "N/A"}</li>
-				<li><strong>Sub Region</strong>: ${country.subregion || "N/A"}</li>
-				<li><strong>Capital</strong>: ${country.capital?.[0] || "N/A"}</li>
-				<li><strong>Top Level Domain</strong>: ${country.tld?.[0] || "N/A"}</li>
-				<li><strong>Currencies</strong>: ${
-					Object.values(country.currencies)
-						.map((currency) => currency.name)
-						.join(", ") || "N/A"
-				}</li>
-				<li><strong>Languages</strong>: ${Object.values(country.languages).join(", ") || "N/A"}</li>
-			</ul>
+	const img = document.createElement("img");
+	img.className = "country-flag";
+	img.src = country.flags.png;
+	img.alt = country.flags.alt || `${country.name.common} flag`;
 
-        	<div class="border-countries">
-				<strong>Border Countries</strong>: ${country.borders.join(", ") || "N/A"}
-			</div>
-        </div>`;
+	const info = document.createElement("div");
+	info.className = "country-info";
+
+	const title = createTextElement("h2", country.name.common);
+
+	const list = document.createElement("ul");
+
+	list.append(
+		createLabel("Native Name", Object.values(country.name.nativeName ?? {})[0]?.common || "N/A"),
+		createLabel("Population", country.population.toLocaleString()),
+		createLabel("Region", country.region || "N/A"),
+		createLabel("Sub Region", country.subregion || "N/A"),
+		createLabel("Capital", country.capital?.[0] || "N/A"),
+		createLabel("Top Level Domain", country.tld?.[0] || "N/A"),
+		createLabel(
+			"Currencies",
+			Object.values(country.currencies ?? {})
+				.map((c) => c.name)
+				.join(", ") || "N/A",
+		),
+		createLabel("Languages", Object.values(country.languages ?? {}).join(", ") || "N/A"),
+	);
+
+	// border countries
+	const bordersContainer = document.createElement("div");
+	bordersContainer.className = "border-countries";
+
+	const borderLabel = document.createElement("strong");
+	borderLabel.innerText = "Border Countries: ";
+	bordersContainer.appendChild(borderLabel);
+
+	if (country.borders?.length) {
+		country.borders.forEach((border) => {
+			const span = document.createElement("span");
+			span.className = "bordering-country";
+			span.innerText = border;
+			bordersContainer.appendChild(span);
+		});
+	} else {
+		const none = document.createElement("span");
+		none.innerText = " N/A";
+		bordersContainer.appendChild(none);
+	}
+
+	info.append(title, list, bordersContainer);
+	countryDetail.append(img, info);
 }
 
-backBtn.addEventListener("click", () => {
-	inputSection.style.display = "flex";
-	countryList.style.display = "grid";
-	countryContainer.style.display = "none";
-});
-
+// show all countries on start
 fetchCountries();

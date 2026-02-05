@@ -131,6 +131,9 @@ button:hover {
 
 .border-countries {
 	margin-top: 4em;
+	display: flex;
+	gap: .5em;
+	align-items: center;
 }
 
 #country-list li {
@@ -180,6 +183,12 @@ button:hover {
 
 #country-detail {
 	margin-bottom: 10em;
+}
+
+.bordering-country {
+	background-color: var(--accent);
+	padding: .2em .4em;
+	border-radius: 5px;
 }
 
 #backBtn {
