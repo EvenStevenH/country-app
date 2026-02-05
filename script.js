@@ -64,18 +64,41 @@ function updateFullResults() {
 	displayCountries(fullResults);
 }
 
-// API fetch
+function getCountryByCode(code) {
+	return allCountries.find((country) => country.cca3 === code);
+}
+
+// API fetch > limit of 10 fields per call
 async function fetchCountries() {
 	try {
-		const response = await fetch("https://restcountries.com/v3.1/all?fields=name,population,region,capital,flags,subregion,languages,tld,currencies,borders");
+		const responseCountries = await fetch("https://restcountries.com/v3.1/all?fields=name,population,region,capital,flags,subregion,languages,tld,currencies,borders");
+		const responseCodes = await fetch("https://restcountries.com/v3.1/all?fields=name,cca3");
 
-		if (!response.ok) {
-			throw new Error(`HTTP error: ${response.status}`);
+		if (!responseCountries.ok) {
+			throw new Error(`HTTP error: ${responseCountries.status}`);
+		}
+		if (!responseCodes.ok) {
+			throw new Error(`HTTP error: ${responseCodes.status}`);
 		}
 
-		const data = await response.json();
-		allCountries = data;
-		displayCountries(data);
+		const countryCodeMap = new Map();
+		const dataCountries = await responseCountries.json();
+		const dataCodes = await responseCodes.json();
+
+		dataCodes.forEach((country) => {
+			countryCodeMap.set(country.cca3, country.name.common);
+		});
+
+		// add country codes into full country objects
+		allCountries = dataCountries.map((country) => {
+			const match = dataCodes.find((countryCode) => countryCode.name.common === country.name.common);
+
+			return {
+				...country,
+				cca3: match?.cca3,
+			};
+		});
+		displayCountries(dataCountries);
 	} catch (error) {
 		console.error("Failed to fetch countries:", error);
 
@@ -177,10 +200,18 @@ function displayCountryInfo(country) {
 	bordersContainer.appendChild(borderLabel);
 
 	if (country.borders?.length) {
-		country.borders.forEach((border) => {
+		country.borders.forEach((borderCode) => {
+			const borderCountry = getCountryByCode(borderCode);
+			if (!borderCountry) return;
+
 			const span = document.createElement("span");
 			span.className = "bordering-country";
-			span.innerText = border;
+			span.innerText = borderCountry.name.common;
+
+			span.addEventListener("click", () => {
+				displayCountryInfo(borderCountry);
+			});
+
 			bordersContainer.appendChild(span);
 		});
 	} else {
